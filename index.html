@@ -1,0 +1,188 @@
+<!--
+ Copyright (c) 2018 ml5
+
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+
+<html>
+
+<head>
+
+	<link rel="shortcut icon" href="/favicon.ico">
+ 
+  <meta charset="UTF-8">
+  <title>İbrahim Doğan</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
+  <script src="https://unpkg.com/ml5@0.1.1/dist/ml5.min.js" type="text/javascript"></script>
+
+
+</head>
+<style>
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 50px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+
+
+h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
+
+
+p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: center;  }
+
+
+
+body {
+    background-color: white;
+}
+
+
+
+.slider {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+#INPUT_15 {
+    bottom: 0px;
+    box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 0px 0px inset;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    height: 34px;
+    left: 0px;
+    position: relative;
+    right: 0px;
+    text-align: center;
+    text-decoration: none solid rgb(255, 255, 255);
+    text-size-adjust: 100%;
+    top: 0px;
+    white-space: pre;
+    width: 88px;
+    column-rule-color: rgb(255, 255, 255);
+    align-items: flex-start;
+    perspective-origin: 44px 17px;
+    transform-origin: 44px 17px;
+    user-select: none;
+    caret-color: rgb(255, 255, 255);
+    background: rgb(29, 161, 242) none no-repeat scroll 0% 0% / auto padding-box border-box;
+    border: 1px solid rgb(29, 161, 242);
+    border-radius: 100px 100px 100px 100px;
+    font: normal normal 700 normal 14px / normal sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+    padding: 8px 16px;
+}/*#INPUT_15*/
+#generate {
+    bottom: 0px;
+    box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 0px 0px inset;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    height: 34px;
+    left: 0px;
+    position: relative;
+    right: 0px;
+    text-align: center;
+    text-decoration: none solid rgb(255, 255, 255);
+    text-size-adjust: 100%;
+    top: 0px;
+    white-space: pre;
+    width: 88px;
+    column-rule-color: rgb(255, 255, 255);
+    align-items: flex-start;
+    perspective-origin: 44px 17px;
+    transform-origin: 44px 17px;
+    user-select: none;
+    caret-color: rgb(255, 255, 255);
+    background: rgb(215, 131, 44) none no-repeat scroll 0% 0% / auto padding-box border-box;
+    border: 1px solid rgb(215, 131, 75);
+    border-radius: 100px 100px 100px 100px;
+    font: normal normal 700 normal 14px / normal sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+    padding: 8px 16px;
+}/*#INPUT_15*/
+textarea[type=text] {
+    width: 50%;
+    font-size:24px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+textarea[type=text]:focus {
+    border: 3px solid #555;
+}
+
+
+
+
+
+
+
+
+</style>
+<body>
+  <br/>
+  <h1>Yapay zeka ile Türkçe metin üretme projesi</h1>
+  <h2>Bu projede Sabahattin Ali'nin kitapları pre-trained model olarak kullanılmıştır. </h2>
+  <p>çekirdek metin:<br/>
+    <input id="textInput" value="Hayatın anlamı " />
+  </p>
+  <p>üretilecek metnin uzunluğu:<span id="length">140</span><br/>
+    <input id="lenSlider" type="range" min="10" max="1000" value="140" class="slider"> </p>
+  <p>derece:<span id="temperature" >0.5</span><br/>
+    <input id="tempSlider" type="range" min="0" max="1" step="0.01" class="slider"></p>
+  <p id="status">Model yükleniyor</p>
+  <p><button id="generate">üret</button></p>
+
+
+
+	<h2>
+			<textarea id="result" type="text" name="status" rows="8" cols="50">
+			</textarea>
+      <br/>
+      <input onclick="tweetIt()" type="submit" value="tweetle" id="INPUT_15" />
+	</h2>
+
+  <script>
+  var predef = ["hayatın anlamı ",
+  			"yıldızlar nasıl ",
+              "gecenin karanlığı ",
+              "çocuklar ",
+              "ışıksız bir ",
+              "adaletin olmadığı ",
+              "bazen sadece "];
+
+  document.getElementById("textInput").value = predef[Math.floor(Math.random() * 7)];
+  </script>
+  <script src="sketch.js"></script>
+</body>
+
+</html>
