@@ -83,7 +83,7 @@ function tweetIt () {
   var phrase = document.getElementById("result").value;
   var tweetUrl = 'https://twitter.com/intent/tweet?text=' +
     encodeURIComponent(phrase) +
-    '.';
+    '. #botdüşünceleri';
 
   window.open(tweetUrl);
 }
