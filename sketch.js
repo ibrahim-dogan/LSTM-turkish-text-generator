@@ -21,7 +21,7 @@ function setup() {
   noCanvas();
 
   // Create the LSTM Generator passing it the model directory
-  lstm = ml5.LSTMGenerator('./models/ivabet/', modelReady);
+  lstm = ml5.LSTMGenerator('./models/ali/', modelReady);
 
   // Grab the DOM elements
   textInput = select('#textInput');
