@@ -8,4 +8,4 @@ The data includes 5 books from Sabahattin Ali (Turkish author).
 
 *You can train your own models following [this tutorial](https://ml5js.org/docs/training-lstm).*
 
-## [Check the demo](https://dedinededin.github.io/LSTM-GeneratorTurkish/)
+## [Check the demo](https://dedinededin.github.io/LSTM-turkish-text-generator/)
